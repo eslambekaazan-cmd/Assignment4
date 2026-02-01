@@ -3,7 +3,7 @@ package model;
 import model.base.SelfCareActivityBase;
 
 public class ProductivityActivity extends SelfCareActivityBase {
-    private int difficulty; // 1..5
+    private int difficulty; 
     private String focusArea;
 
     public ProductivityActivity(int id, String name, Routine routine, int difficulty, String focusArea) {

@@ -56,8 +56,8 @@ public class ActivityRepositoryJdbc implements ActivityRepository {
             ps.setInt(2, entity.getRoutine().getId());
 
             if (entity instanceof WellnessActivity w) {
-                ps.setString(3, "WELLNESS"); // activity_type
-                ps.setString(4, "WELLNESS"); // kind
+                ps.setString(3, "WELLNESS");
+                ps.setString(4, "WELLNESS"); 
 
                 ps.setInt(5, w.getMinutes());
                 ps.setString(6, w.getIntensity());
@@ -65,8 +65,8 @@ public class ActivityRepositoryJdbc implements ActivityRepository {
                 ps.setNull(8, Types.VARCHAR);
 
             } else if (entity instanceof ProductivityActivity p) {
-                ps.setString(3, "PRODUCTIVITY"); // activity_type
-                ps.setString(4, "PRODUCTIVITY"); // kind
+                ps.setString(3, "PRODUCTIVITY");
+                ps.setString(4, "PRODUCTIVITY"); 
 
                 ps.setNull(5, Types.INTEGER);
                 ps.setNull(6, Types.VARCHAR);

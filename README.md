@@ -1,194 +1,126 @@
 
-# GlowUp Tracker — Assignment 4 (SOLID & Advanced OOP)
+# **GlowUp Tracker – Assignment 4**
 
-## Project Overview
+## **1 Project description**
 
-This project is a **CLI-based Java application** called **GlowUp Tracker**.
-It helps track self-care activities (wellness and productivity) using a layered architecture and a PostgreSQL database.
+This project is a Java console application.
+It is a refactored version of Assignment 3.
+The goal of the project is to apply SOLID principles and advanced OOP concepts.
+The application works with a PostgreSQL database using JDBC.
 
-The project was refactored from Assignment 3 to follow **SOLID principles**, use **advanced OOP features**, and apply a clean **controller → service → repository → database** structure.
 
-## Technologies Used
+## **2 Architecture**
 
-* Java
-* PostgreSQL
-* JDBC
-* IntelliJ IDEA
-* pgAdmin
-* Git
+The project uses layered architecture.
 
-## Architecture
+1 Controller layer
+2 Service layer
+3 Repository layer
+4 Database layer
 
-The project follows a **layered architecture**:
+Controller works only with services.
+Service contains business logic and validation.
+Repository works with the database using JDBC.
 
-* **Controller layer**
-  Handles user input from CLI and delegates actions to the service layer.
-  No business logic is placed here.
 
-* **Service layer**
-  Contains business logic, validation, and exception handling.
-  Works only with repository interfaces (Dependency Inversion Principle).
+## **3 SOLID principles**
 
-* **Repository layer**
-  Responsible for all database operations using JDBC.
-  Implements generic CRUD interfaces.
+**1 SRP**
+Each class has only one responsibility.
+Controller handles user input.
+Service handles logic and validation.
+Repository handles database operations.
 
-* **Database layer**
-  PostgreSQL database with related tables and foreign keys.
+**2 OCP**
+New activity types can be added without changing existing code.
 
+**3 LSP**
+All activity types are used through the base class.
 
-## SOLID Principles
+**4 ISP**
+Small and specific interfaces are used instead of one large interface.
 
-### SRP (Single Responsibility Principle)
+**5 DIP**
+Service layer depends on repository interfaces, not implementations.
 
-Each class has only one responsibility:
 
-* Controllers handle input/output
-* Services handle business logic and validation
-* Repositories handle database access
+## **4 OOP features**
 
-### OCP (Open–Closed Principle)
+**1 Abstract class**
+SelfCareActivityBase is an abstract class.
 
-New activity types can be added by extending the abstract base class without modifying existing logic.
+**2 Inheritance**
+WellnessActivity and ProductivityActivity extend the base class.
 
-### LSP (Liskov Substitution Principle)
+**3 Polymorphism**
+Activities are handled using the base class reference.
 
-WellnessActivity and ProductivityActivity can be used through the base class SelfCareActivityBase.
+**4 Generics**
+Generics are used in CrudService and CrudRepository.
 
-### ISP (Interface Segregation Principle)
+**5 Lambda expressions**
+Lambda expressions are used to sort activities.
 
-Small and focused interfaces are used, such as:
+**6 Reflection**
+Reflection is used to print class information at runtime.
 
-* CrudService<T>
-* CrudRepository<T>
-* Printable
-* Validatable<T>
 
-### DIP (Dependency Inversion Principle)
+## **5 Database**
 
-Services depend on repository **interfaces**, not implementations.
-Dependencies are injected in Main.
+PostgreSQL database is used.
 
+Database tables:
+1 routine_types
+2 routines
+3 activities
 
-## OOP & Advanced Features
+Database features:
+1 foreign keys
+2 NOT NULL constraints
+3 UNIQUE constraint on activity name
 
-### Abstract Class & Polymorphism
+Database structure and sample data are defined in **schema.sql**.
 
-SelfCareActivityBase is an abstract class with common fields and methods.
-Subclasses:
 
-* WellnessActivity
-* ProductivityActivity
+## **6 Exception handling**
 
-Polymorphism is used when working with activities through the base type.
+Custom exceptions are used in the project.
 
-### Generics
+1 InvalidInputException
+2 DuplicateResourceException
+3 ResourceNotFoundException
+4 DatabaseOperationException
 
-Generics are used in:
+Exceptions are handled in service and repository layers.
 
-* CrudService<T>
-* CrudRepository<T>
 
-This allows code reuse for different entities.
+## **7 Application functionality**
 
-### Lambda Expressions
+The application supports the following actions.
 
-Lambda expressions are used for sorting activities by score in the service layer.
+1 Create activity
+2 List all activities
+3 Sort activities
+4 Get activity by id
+5 Delete activity
+6 Validation and error handling
 
-### Reflection
 
-Reflection is demonstrated using a utility class that prints:
+## **8 Screenshots**
 
-* Class name
-* Fields
-* Methods
+Screenshots are located in **docs/screenshots**.
 
-This shows runtime type inspection (RTTI).
+They demonstrate:
+1 application start
+2 CRUD operations
+3 sorting
+4 exceptions
+5 foreign key constraint
+6 reflection output
 
-### Interface Default / Static Methods
 
-Interfaces include default and static methods (e.g. in validation and printing utilities).
+## **9 Reflection**
 
-
-## Database Design
-
-The database contains related tables:
-
-* routine_types
-* routines
-* activities
-
-Features:
-
-* Foreign keys between tables
-* NOT NULL constraints
-* UNIQUE constraint on activity name
-* Sample data inserted using schema.sql
-
-
-## Exception Handling
-
-Custom exception hierarchy is used:
-
-* InvalidInputException
-* DuplicateResourceException
-* ResourceNotFoundException
-* DatabaseOperationException
-
-All exceptions are thrown from the **service or repository layer**, not from controllers.
-
-
-## How to Run the Project
-
-### 1. Compile
-
-
-javac -cp "lib/postgresql.jar" -d out $(find src -name "*.java")
-
-
-### 2. Run
-
-
-java -cp "out:lib/postgresql.jar" Main
-
-
-## Application Features (CLI)
-
-* Create Wellness and Productivity activities
-* List all activities
-* Sort activities by score
-* Get activity by ID
-* Delete activities
-* Validation and exception handling
-* Database integrity checks (foreign keys)
-
-
-## Screenshots
-
-Screenshots of the following are provided in docs/screenshots:
-
-* Application start
-* CRUD operations
-* Sorting using lambda
-* Exception handling
-* Foreign key constraint error
-* Reflection output
-
-
-## Reflection
-
-During this project, I learned how to properly structure a Java application using SOLID principles.
-The most challenging part was connecting JDBC with polymorphic entities and handling database constraints correctly.
-
-This project helped me understand why layered architecture and clean separation of responsibilities are important in real applications.
-
-
-## Conclusion
-
-This project demonstrates the use of:
-
-* SOLID principles
-* Advanced Java OOP features
-* JDBC with PostgreSQL
-* Clean and maintainable architecture
-
+This assignment helped me understand how SOLID principles are applied in practice.
+The most difficult part was working with JDBC and database constraints.
+Overall, the project improved my understanding of layered architecture.
